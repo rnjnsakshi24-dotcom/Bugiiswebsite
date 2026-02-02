@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Bugiii 💖 Important Question</title>
+<title>Bugiii 💗 Valentine Quest</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
-  background: linear-gradient(135deg, #ffb6c1, #ffe4ec);
-  font-family: 'Pacifico', cursive;
+  background: linear-gradient(135deg, #ffc1cc, #ffe6ef);
+  font-family: 'Parisienne', cursive;
   text-align: center;
   overflow: hidden;
 }
@@ -19,10 +19,10 @@ body {
 .active { display: block; }
 
 button {
-  padding: 15px 32px;
-  font-size: 20px;
+  padding: 14px 34px;
+  font-size: 22px;
   border: none;
-  border-radius: 30px;
+  border-radius: 40px;
   cursor: pointer;
   margin: 15px;
 }
@@ -35,21 +35,23 @@ button {
 
 .no { background: #ffd6e0; }
 
-.cat { font-size: 70px; }
+.sticker {
+  font-size: 70px;
+}
 
 .shake {
-  animation: shake 0.3s;
+  animation: shake 0.35s;
 }
 
 @keyframes shake {
   0% { transform: translate(0); }
-  25% { transform: translate(-5px, 5px); }
-  50% { transform: translate(5px, -5px); }
-  75% { transform: translate(-5px, -5px); }
+  25% { transform: translate(-6px, 6px); }
+  50% { transform: translate(6px, -6px); }
+  75% { transform: translate(-6px, -6px); }
   100% { transform: translate(0); }
 }
 
-.kiss {
+.kiss, .cracker {
   position: absolute;
   font-size: 42px;
   animation: float 3s linear forwards;
@@ -57,11 +59,11 @@ button {
 
 @keyframes float {
   from { opacity:1; transform: translateY(0); }
-  to { opacity:0; transform: translateY(-220px); }
+  to { opacity:0; transform: translateY(-250px); }
 }
 
 .loading {
-  font-size: 24px;
+  font-size: 26px;
   animation: blink 1s infinite;
 }
 
@@ -74,52 +76,64 @@ button {
 <body>
 
 <audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5fbe9c4b4d.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5fbe9c4b4d.mp3">
+</audio>
+
+<audio id="celebrate">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_8c1c6c1a69.mp3">
 </audio>
 
 <!-- 1 -->
 <div class="section active" id="s1">
-  <div class="cat">🐱💗🐱</div>
-  <h1>Bonjour Bugiii 😌</h1>
-  <p>Ye website sirf brave logon ke liye hai.</p>
-  <button class="yes" onclick="next(2)">I am brave 😏</button>
+  <div class="sticker">🐻‍❄️💗🐻‍❄️</div>
+  <h1>Bonjour Bugiii ✨</h1>
+  <p>Dudu approved website ahead 🧸</p>
+  <button class="yes" onclick="next(2)">Enter if brave 😌</button>
 </div>
 
 <!-- 2 -->
 <div class="section" id="s2">
-  <h1>Question 1 🐾</h1>
-  <p>Bugiii, tu thoda sa cute hai?</p>
-  <button class="yes" onclick="next(3)">Haan obviously 😌</button>
-  <button class="no" onmouseover="run(this)">Nahi</button>
+  <div class="sticker">🐻💞</div>
+  <h1>Quick Check 🐾</h1>
+  <p>Someone here is very cute… agree?</p>
+  <button class="yes" onclick="next(3)">Obviously 😌</button>
+  <button class="no" onmouseover="run(this)">Nope</button>
 </div>
 
 <!-- 3 -->
 <div class="section" id="s3">
-  <div class="cat">🐱🐱🐱</div>
-  <h1>Question 2 😈</h1>
-  <p>Tu mujhe thoda sa pasand karta hai?</p>
-  <button class="yes" onclick="next(4)">Haan thoda 💕</button>
-  <button class="no" onmouseover="savageNo(this)">Bilkul nahi</button>
-  <p>⚠️ Warning: NO bolega toh screen gussa karegi 💔</p>
+  <div class="sticker">🐻‍❄️🐻‍❄️</div>
+  <h1>Honest Moment 😈</h1>
+  <p>Heart goes soft here?</p>
+  <button class="yes" onclick="next(4)">Maybe 💕</button>
+  <button class="no" onmouseover="savageNo(this)">No chance</button>
 </div>
 
 <!-- 4 -->
 <div class="section" id="s4">
-  <h1 class="loading">Checking Bugiii compatibility…</h1>
-  <p class="loading">Result: 99.9% match 😌</p>
-  <button class="yes" onclick="next(5)">Aage kya hai? 👀</button>
+  <h1 class="loading">Calculating destiny…</h1>
+  <p class="loading">Compatibility: 99.9% 😌</p>
+  <button class="yes" onclick="next(5)">Show result 💖</button>
 </div>
 
 <!-- FINAL -->
 <div class="section" id="s5">
-  <h1>Bugiii… 💘</h1>
-  <p>Will you be my Valentine?</p>
-  <p><i>Cette question est juste une formalité 💋</i></p>
+  <div class="sticker">🐻💋🐻</div>
+  <h1>Will you be my Valentine? 💘</h1>
+  <p><i>Cette question n’a qu’une seule réponse 💋</i></p>
   <button class="yes" onclick="finalYes()">YES 💖</button>
-  <button class="no" onmouseover="alert('NO is under maintenance 🚧 Bugiii 😌')">NO</button>
+  <button class="no" onmouseover="savageNo(this)">NO</button>
 </div>
 
 <script>
+const savageReplies = [
+  "Nice try 😌",
+  "Heart already said yes 💗",
+  "Denial phase detected",
+  "System error: NO not allowed",
+  "Dudu is disappointed 🧸"
+];
+
 function next(n) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.getElementById('s' + n).classList.add('active');
@@ -134,17 +148,19 @@ function run(btn) {
 
 function savageNo(btn) {
   run(btn);
-  alert("Bugiii jhooth mat bol 😏 Tu already YES hai.");
+  alert(savageReplies[Math.floor(Math.random() * savageReplies.length)]);
 }
 
 function vibrate() {
   document.body.classList.add("shake");
-  setTimeout(() => document.body.classList.remove("shake"), 300);
+  setTimeout(() => document.body.classList.remove("shake"), 350);
 }
 
 function finalYes() {
   document.getElementById("music").play();
-  for (let i = 0; i < 25; i++) {
+  document.getElementById("celebrate").play();
+
+  for (let i = 0; i < 20; i++) {
     let kiss = document.createElement("div");
     kiss.className = "kiss";
     kiss.innerHTML = "💋";
@@ -153,8 +169,19 @@ function finalYes() {
     document.body.appendChild(kiss);
     setTimeout(() => kiss.remove(), 3000);
   }
+
+  for (let i = 0; i < 15; i++) {
+    let cracker = document.createElement("div");
+    cracker.className = "cracker";
+    cracker.innerHTML = "🎉🎊";
+    cracker.style.left = Math.random() * window.innerWidth + "px";
+    cracker.style.top = window.innerHeight + "px";
+    document.body.appendChild(cracker);
+    setTimeout(() => cracker.remove(), 3000);
+  }
+
   document.getElementById("s5").innerHTML =
-    "<h1>YAY BUGIII 💖🥰</h1><p>Tu officially mera Valentine hai 💕<br>Je t’adore 😘</p>";
+    "<h1>JE T’AIME 💖🎉</h1><p>Bugiii, officially Valentine status unlocked 🧸💋</p>";
 }
 </script>
 
