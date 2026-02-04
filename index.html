@@ -15,9 +15,16 @@ body {
   overflow: hidden;
 }
 
+/* SECTIONS */
 .section { display: none; padding-top: 70px; }
 .active { display: block; }
 
+img {
+  width: 220px;
+  border-radius: 20px;
+}
+
+/* BUTTONS */
 button {
   padding: 14px 34px;
   font-size: 22px;
@@ -35,10 +42,7 @@ button {
 
 .no { background: #ffd6e0; }
 
-.sticker {
-  font-size: 70px;
-}
-
+/* SHAKE */
 .shake {
   animation: shake 0.35s;
 }
@@ -51,137 +55,154 @@ button {
   100% { transform: translate(0); }
 }
 
-.kiss, .cracker {
-  position: absolute;
+/* FLOATING HEARTS & KISSES */
+.floating {
+  position: fixed;
+  bottom: -40px;
+  font-size: 30px;
+  animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* COUNTDOWN */
+.countdown {
   font-size: 42px;
-  animation: float 3s linear forwards;
+  animation: pop 1s infinite;
 }
 
-@keyframes float {
-  from { opacity:1; transform: translateY(0); }
-  to { opacity:0; transform: translateY(-250px); }
-}
-
-.loading {
-  font-size: 26px;
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0.4; }
+@keyframes pop {
+  50% { transform: scale(1.2); }
 }
 </style>
 </head>
 
 <body>
 
-<audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5fbe9c4b4d.mp3">
-</audio>
-
 <audio id="celebrate">
   <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_8c1c6c1a69.mp3">
 </audio>
 
-<!-- 1 -->
+<!-- SECTION 1 -->
 <div class="section active" id="s1">
-  <div class="sticker">🐻‍❄️💗🐻‍❄️</div>
-  <h1>Bonjour Bugiii ✨</h1>
-  <p>Bugu approved website ahead 🧸</p>
-  <button class="yes" onclick="next(2)">Enter if brave 😌</button>
+  <img src="https://media.tenor.com/UYkN4sYjNwEAAAAC/bubu-rose-bubu-love.gif">
+  <h1>Hello Bugiii 💗</h1>
+  <p>Something cute & dangerous ahead 😌</p>
+  <button class="yes" onclick="next(2)">Enter 😏</button>
 </div>
 
-<!-- 2 -->
+<!-- SECTION 2 -->
 <div class="section" id="s2">
-  <div class="sticker">🐻💞</div>
-  <h1>Quick Check 🐾</h1>
-  <p>Someone here is very cute… agree?</p>
-  <button class="yes" onclick="next(3)">Obviously 😌</button>
+  <img src="https://media.tenor.com/AcM2xZzP5NcAAAAC/dudu-bubu.gif">
+  <h1>Important Question 😌</h1>
+  <p>Are you illegally cute?</p>
+  <button class="yes" onclick="next(3)">Yes 😳</button>
   <button class="no" onmouseover="run(this)">Nope</button>
 </div>
 
-<!-- 3 -->
+<!-- SECTION 3 -->
 <div class="section" id="s3">
-  <div class="sticker">🐻‍❄️🐻‍❄️</div>
-  <h1>Honest Moment 😈</h1>
-  <p>Heart goes soft here?</p>
-  <button class="yes" onclick="next(4)">Maybe 💕</button>
-  <button class="no" onmouseover="savageNo(this)">No chance</button>
+  <img src="https://media.tenor.com/W3aX9p9uQH4AAAAC/dudu-bubu-love.gif">
+  <h1>Final Check 😈</h1>
+  <p>Heart already melting?</p>
+  <button class="yes" onclick="startCountdown()">Umm… maybe 💕</button>
+  <button class="no" onclick="savageNo(this)">No</button>
 </div>
 
-<!-- 4 -->
-<div class="section" id="s4">
-  <h1 class="loading">Calculating destiny…</h1>
-  <p class="loading">Compatibility: 99.9% 😌</p>
-  <button class="yes" onclick="next(5)">Show result 💖</button>
+<!-- COUNTDOWN -->
+<div class="section" id="countdown">
+  <h1>Preparing question… 😌</h1>
+  <div class="countdown" id="timer">3</div>
 </div>
 
 <!-- FINAL -->
-<div class="section" id="s5">
-  <div class="sticker">🐻💋🐻</div>
-  <h1>Will you be my Valentine? 💘</h1>
-  <p><i>Cette question n’a qu’une seule réponse 💋</i></p>
+<div class="section" id="s4">
+  <img src="https://media.tenor.com/W3aX9p9uQH4AAAAC/dudu-bubu-love.gif">
+  <h1>Bugiii 💗</h1>
+  <h2>Will you be my Valentine? 💘</h2>
   <button class="yes" onclick="finalYes()">YES 💖</button>
-  <button class="no" onmouseover="savageNo(this)">NO</button>
+  <button class="no" onclick="savageNo(this)">NO</button>
 </div>
 
 <script>
-const savageReplies = [
-  "Nice try 😌",
-  "Heart already said yes 💗",
-  "Denial phase detected",
-  "System error: NO not allowed",
-  "Dudu is disappointed 🧸"
-];
-
+/* SECTION CONTROL */
 function next(n) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.getElementById('s' + n).classList.add('active');
+  document.querySelector(".active").classList.remove("active");
+  document.getElementById("s" + n).classList.add("active");
 }
 
+/* RUNAWAY NO */
 function run(btn) {
   btn.style.position = "absolute";
-  btn.style.left = Math.random() * (window.innerWidth - 120) + "px";
-  btn.style.top = Math.random() * (window.innerHeight - 60) + "px";
-  vibrate();
+  btn.style.left = Math.random() * 80 + "%";
+  btn.style.top = Math.random() * 80 + "%";
 }
+
+/* SAVAGE NO */
+let noCount = 0;
+const savageReplies = [
+  "Nice try 😌",
+  "Heart already said YES 💗",
+  "Denial detected 😏",
+  "System error ❌",
+  "Bubu is judging you 🧸",
+  "Too late. Destiny locked 🔒"
+];
 
 function savageNo(btn) {
-  run(btn);
-  alert(savageReplies[Math.floor(Math.random() * savageReplies.length)]);
+  btn.classList.add("shake");
+  alert(savageReplies[noCount % savageReplies.length]);
+  noCount++;
+  setTimeout(() => btn.classList.remove("shake"), 300);
 }
 
-function vibrate() {
-  document.body.classList.add("shake");
-  setTimeout(() => document.body.classList.remove("shake"), 350);
+/* COUNTDOWN */
+function startCountdown() {
+  document.querySelector(".active").classList.remove("active");
+  document.getElementById("countdown").classList.add("active");
+
+  let count = 3;
+  const timer = document.getElementById("timer");
+
+  const interval = setInterval(() => {
+    count--;
+    timer.textContent = count;
+    if (count === 0) {
+      clearInterval(interval);
+      document.getElementById("countdown").classList.remove("active");
+      document.getElementById("s4").classList.add("active");
+    }
+  }, 1000);
 }
 
+/* FLOATING HEARTS & KISSES */
+setInterval(() => {
+  const el = document.createElement("div");
+  el.className = "floating";
+  el.innerHTML = Math.random() > 0.5 ? "💕" : "💋";
+  el.style.left = Math.random() * 100 + "vw";
+  el.style.animationDuration = (3 + Math.random() * 3) + "s";
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 6000);
+}, 400);
+
+/* FINAL YES */
 function finalYes() {
-  document.getElementById("music").play();
   document.getElementById("celebrate").play();
-
-  for (let i = 0; i < 20; i++) {
-    let kiss = document.createElement("div");
-    kiss.className = "kiss";
-    kiss.innerHTML = "💋";
-    kiss.style.left = Math.random() * window.innerWidth + "px";
-    kiss.style.top = window.innerHeight + "px";
-    document.body.appendChild(kiss);
-    setTimeout(() => kiss.remove(), 3000);
-  }
-
-  for (let i = 0; i < 15; i++) {
-    let cracker = document.createElement("div");
-    cracker.className = "cracker";
-    cracker.innerHTML = "🎉🎊";
-    cracker.style.left = Math.random() * window.innerWidth + "px";
-    cracker.style.top = window.innerHeight + "px";
-    document.body.appendChild(cracker);
-    setTimeout(() => cracker.remove(), 3000);
-  }
-
-  document.getElementById("s5").innerHTML =
-    "<h1>JE T’AIME 💖🎉</h1><p>Bugiii, officially Valentine status unlocked 🧸💋</p>";
+  document.body.innerHTML = `
+    <div style="padding-top:80px;">
+      <img src="https://media.tenor.com/UYkN4sYjNwEAAAAC/bubu-rose-bubu-love.gif">
+      <h1>YAYYYYY 😭💗</h1>
+      <p>Officially Valentine secured 😌💘</p>
+      <p>Unlimited hugs 🧸 kisses 💋 & love 💕</p>
+      <h2>Happy Valentine’s Day Bugiii 💖</h2>
+    </div>
+  `;
 }
 </script>
 
