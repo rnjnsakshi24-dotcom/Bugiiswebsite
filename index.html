@@ -11,24 +11,14 @@ body {
   font-family: "Lucida Calligraphy", "Brush Script MT", cursive;
   text-align: center;
   overflow: hidden;
+  transition: transform 0.2s;
 }
 
-h1, h2 {
-  font-size: 36px;
-}
+h1, h2 { font-size: 36px; }
+p { font-size: 26px; }
 
-p {
-  font-size: 26px;
-}
-
-.section {
-  display: none;
-  padding-top: 70px;
-}
-
-.active {
-  display: block;
-}
+.section { display: none; padding-top: 70px; }
+.active { display: block; }
 
 img {
   width: 240px;
@@ -45,38 +35,29 @@ button {
   margin: 15px;
 }
 
-.yes {
-  background: #ff4d6d;
-  color: white;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+.yes { background: #ff4d6d; color: white; }
+.no { background: #ffd6e0; }
+
+/* SHAKE PAGE */
+.shake-page {
+  animation: pageShake 0.4s;
+}
+@keyframes pageShake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
 }
 
-.no {
-  background: #ffd6e0;
-}
-
-/* SHAKE */
-.shake {
-  animation: shake 0.35s;
-}
-
-@keyframes shake {
-  0% { transform: translate(0); }
-  25% { transform: translate(-6px, 6px); }
-  50% { transform: translate(6px, -6px); }
-  75% { transform: translate(-6px, -6px); }
-  100% { transform: translate(0); }
-}
-
-/* FLOATING HEARTS & KISSES */
+/* FLOATING HEARTS */
 .floating {
   position: fixed;
   bottom: -40px;
-  font-size: 32px;
+  font-size: 30px;
   animation: floatUp linear forwards;
   pointer-events: none;
 }
-
 @keyframes floatUp {
   to {
     transform: translateY(-110vh) rotate(360deg);
@@ -84,19 +65,34 @@ button {
   }
 }
 
-/* COUNTDOWN */
-.countdown {
-  font-size: 48px;
-  animation: pop 1s infinite;
+/* FLASH MESSAGE */
+.flash {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff4d6d;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 20px;
+  font-size: 26px;
+  z-index: 999;
+  animation: popOut 2s forwards;
 }
-
-@keyframes pop {
-  50% { transform: scale(1.3); }
+@keyframes popOut {
+  0% { opacity: 0; transform: translate(-50%, -20px); }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
 }
 </style>
 </head>
 
 <body>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5fbe9c4b4d.mp3">
+</audio>
 
 <audio id="celebrate">
   <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_8c1c6c1a69.mp3">
@@ -106,39 +102,32 @@ button {
 <div class="section active" id="s1">
   <img src="https://media.tenor.com/UYkN4sYjNwEAAAAC/bubu-rose-bubu-love.gif">
   <h1>Hello Bugiii 💕</h1>
-  <p>A little surprise for you 😌</p>
+  <p>Aap Sarmao Mat Enter at your own RISK 😌</p>
   <button class="yes" onclick="next(2)">Enter 💗</button>
 </div>
 
 <!-- SECTION 2 -->
 <div class="section" id="s2">
   <img src="https://media.tenor.com/AcM2xZzP5NcAAAAC/dudu-bubu.gif">
-  <h1>Mini Quiz 😏</h1>
-  <p>Are you extremely cute?</p>
-  <button class="yes" onclick="next(3)">Obviously 😌</button>
-  <button class="no" onmouseover="run(this)">No</button>
+  <h1>Soch rahe hoge… 🤭</h1>
+  <p>“Ye pagal phir kuch naya le aayi”</p>
+  <button class="yes" onclick="next(3)">Sach hai 😆</button>
+  <button class="no" onclick="savageNo()">Nahi</button>
 </div>
 
 <!-- SECTION 3 -->
 <div class="section" id="s3">
   <img src="https://media.tenor.com/W3aX9p9uQH4AAAAC/dudu-bubu-love.gif">
-  <h1>Honest Moment 💞</h1>
-  <p>Is your heart melting?</p>
-  <button class="yes" onclick="next(4)">Maybe 💕</button>
-  <button class="no" onclick="savageNo(this)">Nope</button>
+  <h1>Final Check 💞</h1>
+  <p>Dil thoda soft ho raha?</p>
+  <button class="yes" onclick="next(4)">Haan 💕</button>
+  <button class="no" onclick="savageNo()">Bilkul nahi</button>
 </div>
 
 <!-- SECTION 4 -->
 <div class="section" id="s4">
-  <h1>Calculating destiny… 💗</h1>
-  <p>Compatibility: 99.9%</p>
-  <button class="yes" onclick="startCountdown()">Show result 💖</button>
-</div>
-
-<!-- COUNTDOWN -->
-<div class="section" id="countdown">
-  <h1>Heart loading… 💘</h1>
-  <div class="countdown" id="timer">3</div>
+  <h1>Result loading… 💗</h1>
+  <button class="yes" onclick="next(5)">Continue 💖</button>
 </div>
 
 <!-- FINAL -->
@@ -147,63 +136,41 @@ button {
   <h1>Bugiii 💗</h1>
   <h2>Will you be my Valentine? 💘</h2>
   <button class="yes" onclick="finalYes()">YES 💖</button>
-  <button class="no" onclick="savageNo(this)">NO</button>
+  <button class="no" onclick="savageNo()">NO</button>
 </div>
 
 <script>
 function next(n) {
+  document.getElementById("bgMusic").play();
   document.querySelector(".active").classList.remove("active");
   document.getElementById("s" + n).classList.add("active");
 }
 
-function run(btn) {
-  btn.style.position = "absolute";
-  btn.style.left = Math.random() * 80 + "%";
-  btn.style.top = Math.random() * 80 + "%";
-}
-
+/* SAVAGE FLASH + SHAKE */
 let noCount = 0;
 const savageReplies = [
-  "Nice try Sukhija ji 😌",
-  "Heart already said YES 💗",
-  "Denial detected  Sukhija ji😏",
-  "System error sukhija ji ❌",
-  "Bubu is judging you 🧸",
-  "Destiny locked 🔒",
-  "Maar khaoge Sukhijaji ?",
+  "System Error sukhija ji😌",
+  "Sach sach bolo Sukhija ji 😏",
+  "Dil already maan gaya 💗",
+  "Zyada nakhre  Sukhija ji😆",
+  "Bugiii caught 😌",
+  "Bas bas ab haan bol do 💕"
 ];
 
-function savageNo(btn) {
-  btn.classList.add("shake");
-  alert(savageReplies[noCount % savageReplies.length]);
+function savageNo() {
+  document.body.classList.add("shake-page");
+  setTimeout(()=>document.body.classList.remove("shake-page"),400);
+
+  const msg = document.createElement("div");
+  msg.className = "flash";
+  msg.innerText = savageReplies[noCount % savageReplies.length];
+  document.body.appendChild(msg);
+  setTimeout(()=>msg.remove(),2000);
+
   noCount++;
-
-  if (noCount > 3) {
-    btn.innerText = "YES 💖";
-    btn.className = "yes";
-    btn.onclick = finalYes;
-  }
-  setTimeout(() => btn.classList.remove("shake"), 300);
 }
 
-function startCountdown() {
-  document.querySelector(".active").classList.remove("active");
-  document.getElementById("countdown").classList.add("active");
-
-  let count = 3;
-  const timer = document.getElementById("timer");
-
-  const interval = setInterval(() => {
-    count--;
-    timer.textContent = count;
-    if (count === 0) {
-      clearInterval(interval);
-      document.getElementById("countdown").classList.remove("active");
-      document.getElementById("s5").classList.add("active");
-    }
-  }, 1000);
-}
-
+/* FLOATING HEARTS */
 setInterval(() => {
   const el = document.createElement("div");
   el.className = "floating";
@@ -212,18 +179,30 @@ setInterval(() => {
   el.style.animationDuration = (3 + Math.random() * 3) + "s";
   document.body.appendChild(el);
   setTimeout(() => el.remove(), 6000);
-}, 400);
+}, 350);
 
+/* FINAL YES BLAST */
 function finalYes() {
   document.getElementById("celebrate").play();
-  document.body.innerHTML = `
-    <div style="padding-top:80px;">
-      <img src="https://media.tenor.com/UYkN4sYjNwEAAAAC/bubu-rose-bubu-love.gif">
-      <h1>Happy Valentine’s Day 💖</h1>
-      <h2>Je t’aime 💕</h2>
-      <p>Forever hugs 🧸 kisses 💋 & love 💗</p>
-    </div>
-  `;
+  for(let i=0;i<40;i++){
+    const k=document.createElement("div");
+    k.className="floating";
+    k.innerHTML="💋";
+    k.style.left=Math.random()*100+"vw";
+    k.style.fontSize="40px";
+    k.style.animationDuration="2s";
+    document.body.appendChild(k);
+    setTimeout(()=>k.remove(),3000);
+  }
+
+  setTimeout(()=>{
+    document.body.innerHTML=`
+      <div style="padding-top:80px;">
+        <img src="https://media.tenor.com/UYkN4sYjNwEAAAAC/bubu-rose-bubu-love.gif">
+        <h1>Happy Valentine’s Day 💖</h1>
+        <h2>Je t’aime 💕</h2>
+      </div>`;
+  },800);
 }
 </script>
 
